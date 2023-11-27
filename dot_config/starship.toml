@@ -28,7 +28,7 @@ show_always = true
 
 [hostname]
 ssh_symbol = "  "
-format = "[@](yellow bold)[$hostname[\\]](blue bold)$ssh_symbol]($style)"
+format = "[@](yellow bold)[$hostname[\\]](blue bold)]($style)[$ssh_symbol](bright-green bold)"
 style = "grey bold"
 ssh_only = false
 
@@ -92,6 +92,9 @@ disabled = false
 [openstack]
 symbol = "󰅣"
 format = "[$symbol ](fg:red)$cloud($style) "
+
+[docker_context]
+format = '[$symbol$context]($style) '
 
 [aws]
 symbol = "  "
