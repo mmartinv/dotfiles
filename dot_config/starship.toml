@@ -14,7 +14,7 @@ style="bold cyan"
 disabled=false
 
 [sudo]
-disabled=true
+disabled=false
 format = "[$symbol]($style)"
 symbol = " "
 style = "red"
@@ -23,7 +23,7 @@ allow_windows = true
 [username]
 style_user = "grey bold"
 style_root = "red bold"
-format = "\\[(blue bold)[$user]($style)"
+format = "[\\[](blue bold)[$user]($style)"
 disabled = false
 show_always = true
 
