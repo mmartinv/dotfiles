@@ -94,7 +94,7 @@ symbol = "󰅣"
 format = "[$symbol ](fg:red)$cloud($style) "
 
 [docker_context]
-format = "[$symbol$context]($style) "
+format = '[$symbol$context]($style) '
 
 [aws]
 symbol = "  "
