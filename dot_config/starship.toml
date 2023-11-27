@@ -16,7 +16,7 @@ disabled=false
 disabled=false
 format = "[$symbol]($style)"
 symbol = " "
-style = "red"
+style = "red blink"
 allow_windows = true
 
 [username]
