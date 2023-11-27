@@ -16,20 +16,20 @@ disabled=false
 [sudo]
 disabled=true
 format = "[$symbol]($style)"
-symbol = "󰈅"
+symbol = " "
 style = "red"
 allow_windows = true
 
 [username]
 style_user = "grey bold"
 style_root = "red bold"
-format = "\\[[$user]($style)"
+format = "\\[(blue bold)[$user]($style)"
 disabled = false
 show_always = true
 
 [hostname]
 ssh_symbol = " "
-format = "[@](green)[$hostname\\]$ssh_symbol]($style)"
+format = "[@](green)[$hostname[\\]](blue bold)$ssh_symbol]($style)"
 style = "green bold"
 ssh_only = false
 
