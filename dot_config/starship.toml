@@ -93,9 +93,6 @@ disabled = false
 symbol = "󰅣"
 format = "[$symbol ](fg:red)$cloud($style) "
 
-[docker_context]
-format = '[$symbol$context]($style) '
-
 [aws]
 symbol = "  "
 
@@ -113,6 +110,7 @@ symbol = " "
 
 [docker_context]
 symbol = " "
+format = '[$symbol$context]($style) '
 
 [elixir]
 symbol = " "
