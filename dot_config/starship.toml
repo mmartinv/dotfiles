@@ -2,8 +2,8 @@ format="$all$fill$container$openstack$kubernetes$time$battery$line_break$sudo$os
 
 command_timeout = 1000
 
-# Disable the newline at the start of the prompt
-#add_newline = false
+# Inserts a blank line between shell prompts
+add_newline = false
 
 [line_break]
 #disabled = true
