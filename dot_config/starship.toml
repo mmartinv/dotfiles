@@ -20,7 +20,7 @@ style = "red"
 allow_windows = true
 
 [username]
-style_user = "green bold"
+style_user = "green bold dimmed"
 style_root = "red bold"
 format = "[\\[](blue bold)[$user]($style)"
 disabled = false
