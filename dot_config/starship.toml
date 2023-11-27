@@ -10,7 +10,6 @@ command_timeout = 1000
 
 [os]
 format="[$symbol]($style)"
-style="bold cyan"
 disabled=false
 
 [sudo]
@@ -93,7 +92,6 @@ disabled = false
 [openstack]
 symbol = "󰅣"
 format = "[$symbol ](fg:red)$cloud($style) "
-
 
 [aws]
 symbol = "  "
