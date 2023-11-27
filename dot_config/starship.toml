@@ -28,7 +28,7 @@ show_always = true
 
 [hostname]
 ssh_symbol = "  "
-format = "[@](grey bold)[$hostname[\\]](blue bold)$ssh_symbol]($style)"
+format = "[@](yellow bold)[$hostname[\\]](blue bold)$ssh_symbol]($style)"
 style = "grey bold"
 ssh_only = false
 
