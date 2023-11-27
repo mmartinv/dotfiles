@@ -1,5 +1,7 @@
 format="$all$fill$container$openstack$kubernetes$time$battery$line_break$os$sudo$character"
+
 command_timeout = 1000
+
 # Disable the newline at the start of the prompt
 #add_newline = false
 
