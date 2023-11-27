@@ -20,7 +20,7 @@ style = "red"
 allow_windows = true
 
 [username]
-style_user = "grey bold"
+style_user = "green bold"
 style_root = "red bold"
 format = "[\\[](blue bold)[$user]($style)"
 disabled = false
@@ -28,7 +28,7 @@ show_always = true
 
 [hostname]
 ssh_symbol = "  "
-format = "[@](green)[$hostname[\\]](blue bold)$ssh_symbol]($style)"
+format = "[@](grey bold)[$hostname[\\]](blue bold)$ssh_symbol]($style)"
 style = "green bold"
 ssh_only = false
 
