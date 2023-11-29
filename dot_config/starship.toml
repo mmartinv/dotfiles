@@ -1,4 +1,4 @@
-format="$all$fill$container$openstack$kubernetes$time$battery$line_break$sudo$os$character"
+format="$all$fill$container$kubernetes$openstack$aws$time$battery$line_break$sudo$os$character"
 
 command_timeout = 1000
 
@@ -88,13 +88,17 @@ disabled = false
 symbol = ""
 format = "[$symbol ](fg:red)$context($style) "
 disabled = false 
+style = "grey bold"
 
 [openstack]
 symbol = "󰅣"
 format = "[$symbol ](fg:red)$cloud($style) "
+style = "grey bold"
 
 [aws]
-symbol = "  "
+symbol = " "
+format = '[$symbol](fg:red bold)[($profile )(\($region\) )(\[$duration\] )]($style)'
+style = "grey bold"
 
 [buf]
 symbol = " "
