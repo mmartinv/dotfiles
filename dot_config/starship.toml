@@ -204,7 +204,6 @@ format = "[$symbol($version )]($style)"
 [python]
 symbol = " "
 format = "[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)"
-pyenv = true
 
 [rlang]
 symbol = "󰟔 "
