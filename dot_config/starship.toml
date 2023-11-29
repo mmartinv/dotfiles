@@ -115,6 +115,7 @@ symbol = " "
 [docker_context]
 symbol = " "
 format = '[$symbol$context]($style) '
+detect_files = ['docker-compose.yml', 'docker-compose.yaml', 'Dockerfile', 'Containerfile'] 
 
 [elixir]
 symbol = " "
