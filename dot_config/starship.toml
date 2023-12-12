@@ -96,7 +96,7 @@ format = "[$symbol ](fg:red)$cloud($style) "
 style = "grey bold"
 
 [aws]
-symbol = " "
+symbol = " "
 format = '[$symbol](fg:red)[($profile )(\($region\) )(\[$duration\] )]($style)'
 style = "grey bold"
 
