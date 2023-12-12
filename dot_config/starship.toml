@@ -97,7 +97,7 @@ style = "grey bold"
 
 [aws]
 symbol = " "
-format = '[$symbol](fg:red bold)[($profile )(\($region\) )(\[$duration\] )]($style)'
+format = '[$symbol](fg:red)[($profile )(\($region\) )(\[$duration\] )]($style)'
 style = "grey bold"
 
 [buf]
