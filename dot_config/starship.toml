@@ -28,8 +28,8 @@ disabled = false
 show_always = true
 
 [hostname]
-ssh_symbol = "  "
-format = "[ ](red)[$hostname]($style)[$ssh_symbol](bright-green bold) "
+ssh_symbol = "()"
+format = "[ ](red)[$hostname]($style)[$ssh_symbol](bright-red bold) "
 style = "grey bold"
 ssh_only = false
 
