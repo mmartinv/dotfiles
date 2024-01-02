@@ -20,7 +20,7 @@ style = "red"
 allow_windows = true
 
 [username]
-style_user = "yellow"
+style_user = "yellow bold"
 style_root = "red"
 format = "[$user]($style)"
 disabled = false
