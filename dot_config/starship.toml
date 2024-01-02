@@ -10,14 +10,13 @@ add_newline = false
 
 [os]
 format="[$symbol]($style)"
-style="fg:bright-cyan"
 disabled=false
 
 [sudo]
 disabled=false
 format = "[$symbol]($style)"
 symbol = " "
-style = "bright-red"
+style = "bright-red bold"
 allow_windows = true
 
 [username]
@@ -29,7 +28,7 @@ show_always = true
 
 [hostname]
 ssh_symbol = ""
-format = "[ ](red)[$hostname]($style)([$ssh_symbol](bright-red bold)) "
+format = "[ ](red)\\([$ssh_symbol](blue)\\)[$hostname]($style) "
 style = "grey bold"
 ssh_only = false
 
