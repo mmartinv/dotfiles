@@ -21,7 +21,7 @@ allow_windows = true
 
 [username]
 style_user = "yellow bold"
-style_root = "red"
+style_root = "red bold"
 format = "[$user]($style)"
 disabled = false
 show_always = true
