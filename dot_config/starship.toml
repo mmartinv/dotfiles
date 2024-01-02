@@ -1,4 +1,4 @@
-format="$all$fill$container$kubernetes$aws$openstack$time$battery$line_break$sudo$os$character"
+format="$all$fill$hostname$container$kubernetes$aws$openstack$time$battery$line_break$sudo$os$character"
 
 command_timeout = 1000
 
@@ -10,25 +10,26 @@ add_newline = false
 
 [os]
 format="[$symbol]($style)"
+style="fg:bright-cyan"
 disabled=false
 
 [sudo]
 disabled=false
 format = "[$symbol]($style)"
 symbol = " "
-style = "red blink"
+style = "bright-red"
 allow_windows = true
 
 [username]
-style_user = "green bold dimmed"
-style_root = "red bold"
-format = "[\\[](blue bold)[$user]($style)"
+style_user = "yellow bold"
+style_root = "bright-red bold"
+format = "[$user]($style)"
 disabled = false
 show_always = true
 
 [hostname]
 ssh_symbol = "  "
-format = "[@](yellow bold)[$hostname[\\]](blue bold)]($style)[$ssh_symbol](bright-green bold)"
+format = "[ ](red)[$hostname]($style)[$ssh_symbol](bright-green bold) "
 style = "grey bold"
 ssh_only = false
 
@@ -42,6 +43,7 @@ time_format = "%R" # Hour:Minute Format
 format = "[  $time ]($style)"
 
 [directory]
+style = "blue bold "
 read_only = " 󰌾"
 read_only_style = "fg:red"
 home_symbol = "󱂵 ~"
