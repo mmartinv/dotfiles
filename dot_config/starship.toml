@@ -16,19 +16,19 @@ disabled=false
 disabled=false
 format = "[$symbol]($style)"
 symbol = " "
-style = "bright-red bold"
+style = "red bold"
 allow_windows = true
 
 [username]
 style_user = "yellow bold"
-style_root = "bright-red bold"
+style_root = "red bold"
 format = "[$user]($style)"
 disabled = false
 show_always = true
 
 [hostname]
 ssh_symbol = " "
-format = "[ ](red)[$ssh_symbol](blue)[$hostname]($style) "
+format = "[ ](red bold)[$ssh_symbol](blue bold)[$hostname]($style) "
 style = "grey bold"
 ssh_only = false
 
