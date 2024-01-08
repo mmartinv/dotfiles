@@ -42,7 +42,7 @@ time_format = "%R" # Hour:Minute Format
 format = "[  $time ]($style)"
 
 [directory]
-style = "blue bold "
+style = "cyan bold "
 read_only = " 󰌾"
 read_only_style = "fg:red"
 home_symbol = "󱂵 ~"
