@@ -15,7 +15,7 @@ disabled=false
 [sudo]
 disabled=false
 format = "[$symbol]($style)"
-symbol = "  "
+symbol = " "
 style = "red" 
 allow_windows = true
 
