@@ -1,4 +1,4 @@
-format="$username$sudo$hostname$all$fill$container$kubernetes$aws$openstack$time$battery$line_break$os$character"
+format="$sudo$username$hostname$all$fill$container$kubernetes$aws$openstack$time$battery$line_break$os$character"
 
 command_timeout = 1000
 
