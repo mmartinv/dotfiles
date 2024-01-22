@@ -83,6 +83,7 @@ threshold = 99
 
 [container]
 format = "[$symbol ](fg:red)[$name]($style) "
+style = "grey bold"
 disabled = false
 
 [kubernetes]
