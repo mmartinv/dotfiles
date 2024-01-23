@@ -94,12 +94,12 @@ style = "grey bold"
 
 [openstack]
 symbol = "󰅣"
-format = "[$symbol ](fg:red)$cloud($project)($style) "
+format = "[$symbol ](fg:red)$cloud(\\($project\\))($style) "
 style = "grey bold"
 
 [aws]
 symbol = " "
-format = '[$symbol](fg:#ff9900)[($profile )(\($region\) )(\[$duration\] )]($style)'
+format = '[$symbol](fg:#ff9900)[($profile)(\($region\))(\[$duration\])]($style)'
 style = "grey bold"
 
 [buf]
