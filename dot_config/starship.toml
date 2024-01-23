@@ -94,7 +94,7 @@ style = "grey bold"
 
 [openstack]
 symbol = "󰅣"
-format = "[$symbol ](fg:red)$cloud($style) "
+format = "[$symbol ](fg:red)$cloud($project)($style) "
 style = "grey bold"
 
 [aws]
