@@ -1,0 +1,13 @@
+---
+gui:
+  nerdFontsVersion: "3"
+
+os:
+  #copyToClipboardCmd: 'xsel -b <<< {{text}}'
+  edit: 'lvim {{filename}}'
+  editAtLine: 'lvim +{{line}} {{filename}}'
+  editAtLineAndWait: 'lvim +{{line}} {{filename}}'
+git:
+  overrideGpg: true
+  commit:
+    signOff: true
