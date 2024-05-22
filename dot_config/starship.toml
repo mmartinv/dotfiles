@@ -1,4 +1,4 @@
-format="$sudo$username$hostname$all$fill$container$kubernetes$openstack$aws$time$battery$line_break$os$character"
+format="$all$fill$container$kubernetes$openstack$aws$time$battery$line_break$os$character"
 
 command_timeout = 1000
 
@@ -23,7 +23,7 @@ allow_windows = true
 style_user = "yellow bold"
 style_root = "red bold"
 format = "[$user]($style) "
-disabled = false
+disabled = true
 show_always = true
 
 [hostname]
@@ -31,6 +31,7 @@ ssh_symbol = " "
 format = "[$ssh_symbol](green)[ ](red)[$hostname]($style) "
 style = "grey bold"
 ssh_only = false
+disabled = true
 
 [fill]
 symbol = " "
@@ -46,8 +47,8 @@ style = "cyan bold "
 read_only = " 󰌾"
 read_only_style = "fg:red"
 home_symbol = "󱂵 ~"
-truncation_length = 3
-truncation_symbol = "…/"
+truncation_length = 10
+truncation_symbol = "󰉓  "
 format="[$path]($style)[$read_only]($read_only_style) "
 [directory.substitutions]
 "documents" = "󰈙 "
