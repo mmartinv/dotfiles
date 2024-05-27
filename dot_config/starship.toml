@@ -1,4 +1,4 @@
-format="$all$fill$container$kubernetes$openstack$aws$time$battery$line_break$os$character"
+format="$all$fill$container$kubernetes$openstack$aws$time$battery$line_break$os$sudo$character"
 
 command_timeout = 1000
 
