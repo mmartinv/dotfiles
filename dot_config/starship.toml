@@ -1,4 +1,4 @@
-format="$all$fill$container$kubernetes$openstack$aws$time$battery$line_break$os$sudo$character"
+format="$all$fill$container$kubernetes$openstack$aws$time$battery$line_break$os$sudo$username$character"
 
 command_timeout = 1000
 
@@ -23,7 +23,7 @@ allow_windows = true
 style_user = "yellow bold"
 style_root = "red bold"
 format = "[$user]($style) "
-disabled = true
+disabled = false
 show_always = true
 
 [hostname]
