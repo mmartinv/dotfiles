@@ -1,0 +1,32 @@
+# This file should normally be installed by your distribution into a
+# directory that is included from the Kerberos configuration file (/etc/krb5.conf)
+# On Fedora/RHEL/CentOS, this is /etc/krb5.conf.d/
+
+# Enable sssd conf dir
+includedir /var/lib/sss/pubconf/krb5.include.d/
+
+[libdefaults]
+    default_realm = {{ keepassxcAttribute "Accounts/Red Hat" "KERBEROS_REALM" }}
+    dns_canonicalize_hostname = false
+    dns_lookup_kdc = true
+    dns_lookup_realm = true
+    forwardable = true
+    rdns = false
+    renew_lifetime = 7d
+    ticket_lifetime = 24h
+    udp_preference_limit = 0
+# To enable the KCM credential cache enable the KCM socket and the service:
+#   systemctl enable sssd-kcm.socket
+#   systemctl start sssd-kcm.socket
+#
+# To disable the KCM credential cache, comment out the following lines.
+    default_ccache_name = KCM:
+#
+# This follwing must be the contents of /etc/crypto-policies/back-ends/krb5.config
+    permitted_enctypes = aes256-cts-hmac-sha384-192 aes128-cts-hmac-sha256-128 aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 camellia256-cts-cmac camellia128-cts-cmac
+
+[realms]
+  {{ keepassxcAttribute "Accounts/Red Hat" "KERBEROS_REALM" }} = {
+    default_domain = {{ keepassxcAttribute "Accounts/Red Hat" "KERBEROS_DOMAIN" }}
+    dns_lookup_kdc = true
+  }

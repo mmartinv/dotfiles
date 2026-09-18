@@ -1,0 +1,10 @@
+case ${SHELL/*\//} in
+bash)
+  export HISTFILESIZE=-1
+  export HISTSIZE=-1
+  export HISTTIMEFORMAT="%d/%m/%y %T "
+  ;;
+zsh)
+  export HIST_STAMPS="%d/%m/%y %T "
+  ;;
+esac

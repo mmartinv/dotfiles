@@ -1,0 +1,2 @@
+export NVIM_PYTHON_LOG_FILE=~/.log_nvim
+alias vi='NVIM_APPNAME=astronvim nvim'

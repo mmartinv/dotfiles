@@ -1,0 +1,1 @@
+#command -v ocm &>/dev/null || ! command -v go &>/dev/null || go install github.com/openshift-online/ocm-cli/cmd/ocm@latest

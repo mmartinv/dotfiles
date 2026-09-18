@@ -1,0 +1,13 @@
+# Go
+export GOPATH=${HOME}/.go
+# Woraround go: github.com/openshift/api@v3.9.1-0.20191111211345-a27ff30ebf09+incompatible: invalid pseudo-version: preceding tag (v3.9.0) not found
+# https://github.com/open-cluster-management/multicloud-operators-subscription/issues/83
+export GOPROXY="https://proxy.golang.org,direct"
+
+# Additional PATH
+if command -v go &>/dev/null; then
+  LOCAL_PATH="$(go env GOPATH)/bin"
+  if ! [[ "$PATH" =~ "${LOCAL_PATH}" ]]; then
+    PATH="$LOCAL_PATH:$PATH"
+  fi
+fi

@@ -1,0 +1,18 @@
+# Available toolsets:
+# context 	Strongly recommended: Tools that provide context about the current user and GitHub context you are operating in
+# actions 	GitHub Actions workflows and CI/CD operations
+# code_security 	Code security related tools, such as GitHub Code Scanning
+# dependabot 	Dependabot tools
+# discussions 	GitHub Discussions related tools
+# experiments 	Experimental features that are not considered stable yet
+# issues 	GitHub Issues related tools
+# notifications 	GitHub Notifications related tools
+# orgs 	GitHub Organization related tools
+# pull_requests 	GitHub Pull Request related tools
+# repos 	GitHub Repository related tools
+# secret_protection 	Secret protection related tools, such as GitHub Secret Scanning
+# users 	GitHub User related tools
+
+#export GITHUB_TOOLSET="all"
+export GITHUB_TOOLSETS="repos,issues,pull_requests,actions,code_security"
+export GITHUB_READ_ONLY=1

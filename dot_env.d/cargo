@@ -1,0 +1,5 @@
+# Additional PATH
+LOCAL_PATH="${CARGO_HOME:-${HOME}/.cargo}/bin"
+if command -v cargo &>/dev/null && ! [[ "$PATH" =~ "${LOCAL_PATH}" ]]; then
+    PATH="$LOCAL_PATH:$PATH"
+fi

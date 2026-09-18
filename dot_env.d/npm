@@ -1,0 +1,7 @@
+if command -v npm &>/dev/null && [ -z "${NPM_CONFIG_PREFIX}" ]; then
+  export NPM_CONFIG_PREFIX="${HOME}/.local/share/npm"
+  LOCAL_PATH="${NPM_CONFIG_PREFIX}/bin"
+  if ! [[ "$PATH" =~ "${LOCAL_PATH}" ]]; then
+    export PATH="${LOCAL_PATH}:${PATH}"
+  fi
+fi

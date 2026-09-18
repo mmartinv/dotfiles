@@ -1,0 +1,50 @@
+# Forklift
+#export REGISTRY_ORG=kubev2v
+#export REGISTRY_TAG=latest
+
+#export CONTAINER_RUNTIME="podman"
+#export ROOTLESS=
+
+# CRC
+#eval $(crc oc-env)
+#
+# CRC Openshift preset
+#export CRC_PRESET="openshift"
+#export CRC_PULL_SECRET_FILE="${HOME}/.pull_secret"
+
+# CRC local registry
+#export REGISTRY="$(crc ip | cut -f -3 -d .).1:5001"
+#export OPM_OPTS=--use-http
+
+# CRC integrated registry
+#export CRC_USE_INTEGRATED_REGISTRY="true"
+#export REGISTRY=default-route-openshift-image-registry.apps-crc.testing
+#export OPM_OPTS=--skip-tls-verify
+
+# External Openshift
+# export REGISTRY=default-route-openshift-image-registry.apps.ocp4.example.com
+# export OPM_OPTS=--skip-tls-verify
+
+# Minikube local registry podman, docker
+#export REGISTRY=localhost:5001
+#export OPM_OPTS=--use-http
+
+# Minikube integrated registry podman
+#export REGISTRY="localhost:$($CONTAINER_RUNTIME inspect ${MINIKUBE_PROFILE_NAME} | jq -r '.[].HostConfig.PortBindings["5000/tcp"][].HostPort')"
+#export OPM_OPTS=--use-http
+
+# Minikube integrated registry docker
+#export REGISTRY="localhost:$($CONTAINER_RUNTIME inspect ${MINIKUBE_PROFILE_NAME} | jq -r '.[].NetworkSettings.Ports."5000/tcp"[0].HostPort')"
+#export OPM_OPTS=--use-http
+
+# Minikube local registry kvm2
+#export REGISTRY=$(minikube ip | cut -f -3 -d .).1:5001
+#export OPM_OPTS=--use-http
+
+# Minikube integrated registry kvm2
+#export REGISTRY="$(minikube ip):5000"
+#export OPM_OPTS=--use-http
+
+# Kind
+# export REGISTRY="localhost:5001"
+# export OPM_OPTS=--use-http

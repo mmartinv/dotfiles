@@ -1,0 +1,2 @@
+#command -v starship &>/dev/null || ! command -v curl &>/dev/null || curl -sS 'https://starship.rs/install.sh' | sh -s -- --bin-dir "$HOME/.local/bin" --force &>/dev/null
+! command -v starship &>/dev/null || eval "$(starship init "${SHELL/*\/}")"

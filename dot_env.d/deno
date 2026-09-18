@@ -1,0 +1,5 @@
+export DENO_INSTALL="$HOME/.deno"
+LOCAL_PATH="${DENO_INSTALL}/bin"
+if command -v deno &>/dev/null && ! [[ "$PATH" =~ "${LOCAL_PATH}" ]]; then
+    PATH="$LOCAL_PATH:$PATH"
+fi

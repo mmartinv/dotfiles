@@ -1,0 +1,2 @@
+#command -v stern &>/dev/null || ! command -v go &>/dev/null || go install github.com/stern/stern@latest
+! command -v stern &>/dev/null || eval "$(stern --completion "${SHELL/*\/}")"

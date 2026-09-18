@@ -1,4 +1,4 @@
-format="$all$fill$container$kubernetes$openstack$aws$time$battery$line_break$os$sudo$username$character"
+format = "$os$all$fill$container$kubernetes$openstack$aws$time$battery$line_break$sudo$username$character"
 
 command_timeout = 1000
 
@@ -9,29 +9,29 @@ add_newline = false
 #disabled = true
 
 [os]
-format="$symbol"
-disabled=false
+format = "$symbol"
+disabled = false
 
 [sudo]
-disabled=false
+disabled = true
 format = "[$symbol]($style)"
 symbol = " "
-style = "red" 
+style = "red"
 allow_windows = true
 
 [username]
 style_user = "yellow bold"
 style_root = "red bold"
 format = "[$user]($style) "
-disabled = false
+disabled = true
 show_always = true
 
 [hostname]
 ssh_symbol = " "
-format = "[$ssh_symbol](green)[ ](red)[$hostname]($style) "
+format = "[$ssh_symbol](green)[$hostname]($style) "
 style = "grey bold"
 ssh_only = false
-disabled = true
+disabled = false
 
 [fill]
 symbol = " "
@@ -39,7 +39,7 @@ disabled = false
 
 [time]
 disabled = false
-time_format = "%R" # Hour:Minute Format
+time_format = "%R"             # Hour:Minute Format
 format = "[  $time ]($style)"
 
 [directory]
@@ -49,7 +49,7 @@ read_only_style = "fg:red"
 home_symbol = "󱂵 ~"
 truncation_length = 10
 truncation_symbol = "󰉓  "
-format="[$path]($style)[$read_only]($read_only_style) "
+format = "[$path]($style)[$read_only]($read_only_style) "
 [directory.substitutions]
 "documents" = "󰈙 "
 "downloads" = " "
@@ -62,7 +62,7 @@ charging_symbol = "󰢝 "
 discharging_symbol = "󱟟 "
 unknown_symbol = "󰂑 "
 empty_symbol = "󱃍 "
-format="[$symbol$percentage]($style)"
+format = "[$symbol$percentage]($style)"
 
 [[battery.display]]
 threshold = 10
@@ -71,7 +71,7 @@ threshold = 10
 threshold = 30
 
 [[battery.display]]
-threshold = 99 
+threshold = 99
 
 [[battery.display]]
 threshold = 10
@@ -80,7 +80,7 @@ threshold = 10
 threshold = 30
 
 [[battery.display]]
-threshold = 99 
+threshold = 99
 
 [container]
 format = "[$symbol ](fg:red)[$name]($style) "
@@ -90,7 +90,7 @@ disabled = false
 [kubernetes]
 symbol = ""
 format = "[$symbol ](fg:red)$context($style) "
-disabled = false 
+disabled = false
 style = "grey bold"
 
 [openstack]
@@ -118,7 +118,12 @@ symbol = " "
 [docker_context]
 symbol = " "
 format = '[$symbol$context]($style) '
-detect_files = ['docker-compose.yml', 'docker-compose.yaml', 'Dockerfile', 'Containerfile'] 
+detect_files = [
+  'docker-compose.yml',
+  'docker-compose.yaml',
+  'Dockerfile',
+  'Containerfile',
+]
 
 [elixir]
 symbol = " "
@@ -271,5 +276,3 @@ symbol = "󰏗 "
 
 [pijul_channel]
 symbol = " "
-
-

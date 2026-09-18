@@ -1,0 +1,11 @@
+#if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+#  if tmux ls &>/dev/null; then
+#    exec tmux attach
+#	else
+#    exec tmux
+#	fi
+#fi
+
+if [ -t 0 ] && [[ -z "${TMUX}" ]] && [[ -n "${SSH_TTY}" ]]; then
+  tmux attach-session -t ssh_tmux &>/dev/null || tmux new-session -s ssh_tmux "${SHELL}"
+fi
