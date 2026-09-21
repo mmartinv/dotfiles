@@ -1,7 +1,8 @@
 README.md
 {{- if ne .chezmoi.os "linux" }}
-.mozilla/native-messaging-hosts/gpgmejson.json
+.mozilla
+.config/google-chrome
 {{- end }}
 {{- if ne .chezmoi.os "darwin" }}
-Library/Application Support/Google/Chrome/NativeMessagingHosts/gpgmejson.json
+Library
 {{- end }}
