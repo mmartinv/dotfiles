@@ -12,5 +12,6 @@
   grep -q -s "${EMAIL}" "${HOME}/.ssh/authorized_keys" ||
   keepassxc-cli show "${KEEPASSXC_ARGS[@]}" "${KEEPASSXC_DATABASE}" "${KEEPASSXC_ENTRY}" --attributes 'SSH_ID_RSA_PUB' >>"${HOME}/.ssh/authorized_keys"
 }
+chmod 600 ${HOME}/.ssh/id_rsa
 
 

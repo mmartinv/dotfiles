@@ -1,0 +1,21 @@
+[edit]
+    command = "vi"
+    hardlink = false
+
+[diff]
+    command = "astronvim"
+    args = ["-d", "{{"{{"}} .Destination {{"}}"}}", "{{"{{"}} .Target {{"}}"}}"]
+
+[merge]
+    command = "astronvim"
+    args = ["-d", "{{"}}"}} .Destination {{"}}"}}", "{{"{{"}} .Source {{"}}"}}, {{"{{"}} .Target {{"}}"}}"]
+
+[keepassxc]
+    database = "{{ .chezmoi.rawHomeDir }}/.passwords.kdbx"
+    args = [ "--no-password", "--key-file", "{{ .chezmoi.rawHomeDir }}/.keepassxc.key"]
+    prompt = false
+
+[[textconv]]
+    pattern = "**/*.plist"
+    command = "plutil"
+    args = ["-convert", "xml1", "-o", "-", "-"]

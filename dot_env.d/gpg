@@ -1,3 +1,4 @@
+export GPG_TTY=$(tty)
 KEEPASSXC_ARGS=("--no-password" "--key-file" "${HOME}/.keepassxc.key")
 KEEPASSXC_DATABASE="${HOME}/.passwords.kdbx"
 KEEPASSXC_ENTRY="Accounts/Red Hat"
