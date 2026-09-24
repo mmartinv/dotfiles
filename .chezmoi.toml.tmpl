@@ -1,19 +1,25 @@
+[env]
+    NVIM_APPNAME = "astronvim"
+
 [edit]
-    command = "vi"
+    command = "nvim"
     hardlink = false
 
 [diff]
-    command = "astronvim"
+    command = "nvim"
     args = ["-d", "{{"{{"}} .Destination {{"}}"}}", "{{"{{"}} .Target {{"}}"}}"]
 
 [merge]
-    command = "astronvim"
+    command = "nvim"
     args = ["-d", "{{"}}"}} .Destination {{"}}"}}", "{{"{{"}} .Source {{"}}"}}, {{"{{"}} .Target {{"}}"}}"]
 
 [keepassxc]
     database = "{{ .chezmoi.rawHomeDir }}/.passwords.kdbx"
     args = [ "--no-password", "--key-file", "{{ .chezmoi.rawHomeDir }}/.keepassxc.key"]
     prompt = false
+
+[hooks.read-source-state.pre]
+    command = ".local/share/chezmoi/.install-keepassxc.sh"
 
 [[textconv]]
     pattern = "**/*.plist"

@@ -2,6 +2,10 @@ README.md
 {{- if ne .chezmoi.os "linux" }}
 .mozilla
 .config/google-chrome
+.config/keepassxc
+.config/user-dirs.dirs
+.config/user-dirs.locale
+.local/share/applications
 {{- end }}
 {{- if ne .chezmoi.os "darwin" }}
 Library

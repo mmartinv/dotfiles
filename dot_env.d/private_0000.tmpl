@@ -1,7 +1,21 @@
+export EMAIL={{ keepassxcAttribute "Accounts/Red Hat" "EMAIL" }}
+
+[ -z "${EMAIL}" ] ||  
+!command -v gio &>/dev/null || 
+gio mount -l | grep -q "google-drive://${EMAIL}" || 
+gio mount "google-drive://${EMAIL}" 
+
+export KEEPASSXC_ARGS=("--no-password" "--key-file" "${HOME}/.keepassxc.key")
+export KEEPASSXC_DATABASE="${HOME}/.passwords.kdbx"
+export KEEPASSXC_ENTRY="Accounts/Red Hat"
+
+### Tokens
 export GITHUB_TOKEN={{ keepassxcAttribute "Accounts/Red Hat" "GITHUB_TOKEN" }}
+export GITHUB_PERSONAL_ACCESS_TOKEN="${GITHUB_TOKEN}"
 export JIRA_TOKEN={{ keepassxcAttribute "Accounts/Red Hat" "JIRA_TOKEN" }}
 export QUAY_APP_TOKEN={{ keepassxcAttribute "Accounts/Red Hat" "QUAY_APP_TOKEN" }}
 
+### Cloud config and API Keys
 export CLOUD_ML_REGION={{ keepassxcAttribute "Accounts/Red Hat" "CLOUD_ML_REGION" }}
 export GEMINI_API_KEY={{ keepassxcAttribute "Accounts/Red Hat" "GEMINI_API_KEY" }}
 export CLAUDE_CODE_USE_VERTEX={{ keepassxcAttribute "Accounts/Red Hat" "CLAUDE_CODE_USE_VERTEX" }}
@@ -12,3 +26,6 @@ export ANTHROPIC_VERTEX_PROJECT_ID={{ keepassxcAttribute "Accounts/Red Hat" "ANT
 # If you have a dedicated project, omit the cloudability-it-gemini parameter.
 #     gcloud auth application-default login
 #     gcloud auth application-default set-quota-project cloudability-it-gemini
+
+
+

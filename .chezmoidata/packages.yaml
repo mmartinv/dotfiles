@@ -1,0 +1,112 @@
+packages:
+  darwin:
+    taps: 
+      - nohajc/anylinuxfs
+    brews:
+      - chezmoi
+      - curl
+      - freerdp
+      - git
+      - gh
+      - glab
+      - golang
+      - gpg2
+      - gpgme
+      - jq
+      - keepassxc
+      - lazygit
+      - libvirt
+      - luarocks
+      - neovim
+      - openssl
+      - qemu
+      - ripgrep
+      - rust
+      - starship
+      - tmux
+      - yq
+    casks:
+      - claude
+      - codex
+      - element
+      - font-adwaita-mono-nerd-font
+      - gcloud-cli
+      - keepassxc
+      - zoom
+  linux:
+    fedora:
+      update: true
+      rpms:
+        - cargo
+        - chezmoi
+        - cockpit
+        - cockpit-machines
+        - cockpit-podman
+        - curl
+        - firewalld
+        - git
+        - gh
+        - glab
+        - golang
+        - go-rpm-macros 
+        - guestfs-tools
+        - jq
+        - keepassxc
+        - libvirt-client
+        - libvirt-daemon-kvm
+        - libvirt-daemon
+        - libvirt-nss
+        - luarocks
+        - neovim
+        - openssl
+        - podman
+        - podman-docker
+        - podman-compose
+        - qemu-img
+        - qemu-kvm
+        - "@rpm-development-tools"
+        - redhat-internal-linfo3
+        - tmux
+        - virt-install
+        - yq
+      repos:
+        - name: google-cloud-cli
+          value: |-
+            [google-cloud-cli]
+            name=Google Cloud CLI
+            baseurl=https://packages.cloud.google.com/yum/repos/cloud-sdk-el10-x86_64
+            enabled=1
+            gpgcheck=1
+            repo_gpgcheck=0
+            gpgkey=https://packages.cloud.google.com/yum/doc/rpm-package-key-v10.gpg
+          rpms:
+             - google-cloud-cli
+             - libxcrypt-compat.x86_64
+        - name: claude-code
+          value: |-
+            [claude-code]
+            name=Claude Code
+            baseurl=https://downloads.claude.ai/claude-code/rpm/stable
+            enabled=1
+            gpgcheck=1
+            repo_gpgcheck=0
+            gpgkey=https://downloads.claude.ai/keys/claude-code.asc
+          rpms:
+            - claude-code
+      coprs:
+        - name: atim/starship
+          rpms:
+            - starship
+        - name: atim/lazygit
+          rpms:
+           - lazygit
+        - name: fluhus/gnome-googledrive
+          rpms:
+        - name: goncalosilva/act
+          rpms: 
+            - act-cli
+      flatpak:
+        flathub:
+          - us.zoom.Zoom
+          - im.riot.Riot
+

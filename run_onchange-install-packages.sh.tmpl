@@ -1,0 +1,51 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+
+{{ range .packages.darwin.taps -}}
+brew trust {{ . | quote }}
+{{ end -}}
+brew bundle --file=/dev/stdin <<EOF
+{{ range .packages.darwin.brews -}}
+brew {{ . | quote }}
+{{ end -}}
+{{ range .packages.darwin.casks -}}
+cask {{ . | quote }}
+{{ end -}}
+EOF
+{{ end -}}
+{{ if eq .chezmoi.os "linux" -}}
+{{ if eq .chezmoi.osRelease.id "fedora" -}}
+#!/bin/bash
+
+### RPM packages
+{{ if .packages.linux.fedora.rpms }}
+sudo dnf install -y {{ range .packages.linux.fedora.rpms -}}{{ . | quote }} {{ end }}
+{{ end }}
+### Custom repos
+{{ range .packages.linux.fedora.repos -}}
+sudo tee /etc/yum.repos.d/{{ .name }}.repo <<EOF
+{{ .value }}
+EOF
+{{ if .rpms -}}
+sudo dnf install -y {{ range .rpms }}{{ . | quote }} {{ end }}
+{{ end }}
+{{ end }}
+### Repos from Copr
+{{ range .packages.linux.fedora.coprs -}}
+sudo dnf copr enable -y {{ .name | quote }}
+{{ if .rpms -}}
+sudo dnf install -y {{ range .rpms }}{{ . | quote }} {{ end }}
+{{ end }}
+{{ end }}
+### Flatpak
+{{ if .packages.linux.fedora.flatpak -}}
+{{ range $hub, $flatpaks := .packages.linux.fedora.flatpak -}}
+flatpak install --system {{ $hub | quote }} {{ range $flatpaks }}{{ . | quote }} {{ end }}
+{{ end }}
+{{ end }}
+### Update
+{{ if .packages.linux.fedora.update -}}
+sudo dnf update --refresh
+{{ end -}}
+{{ end -}}
+{{ end -}}

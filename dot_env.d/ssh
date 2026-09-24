@@ -1,17 +1,11 @@
 ! command -v keepassxc-cli &>/dev/null || {
-  KEEPASSXC_ARGS=("--no-password" "--key-file" "${HOME}/.keepassxc.key")
-  KEEPASSXC_DATABASE="${HOME}/.passwords.kdbx"
-  KEEPASSXC_ENTRY="Accounts/Red Hat"
   [ -d "${HOME}/.ssh" ] || mkdir "${HOME}/.ssh"
   [ -f "${HOME}/.ssh/id_rsa" ] || {
     keepassxc-cli show "${KEEPASSXC_ARGS[@]}" "${KEEPASSXC_DATABASE}" "${KEEPASSXC_ENTRY}" --attributes 'SSH_ID_RSA' >"${HOME}/.ssh/id_rsa"
     keepassxc-cli show "${KEEPASSXC_ARGS[@]}" "${KEEPASSXC_DATABASE}" "${KEEPASSXC_ENTRY}" --attributes 'SSH_ID_RSA_PUB' >"${HOME}/.ssh/id_rsa.pub"
+    chmod 600 ${HOME}/.ssh/id_rsa
   }
-  EMAIL=$(keepassxc-cli show "${KEEPASSXC_ARGS[@]}" "${KEEPASSXC_DATABASE}" "${KEEPASSXC_ENTRY}" --attributes "EMAIL")
-  ! command -v grep &>/dev/null ||
+  [ -z "${EMAIL}" ] || ! command -v grep &>/dev/null ||
   grep -q -s "${EMAIL}" "${HOME}/.ssh/authorized_keys" ||
   keepassxc-cli show "${KEEPASSXC_ARGS[@]}" "${KEEPASSXC_DATABASE}" "${KEEPASSXC_ENTRY}" --attributes 'SSH_ID_RSA_PUB' >>"${HOME}/.ssh/authorized_keys"
 }
-chmod 600 ${HOME}/.ssh/id_rsa
-
-
