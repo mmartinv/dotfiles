@@ -12,9 +12,10 @@ brew {{ . | quote }}
 cask {{ . | quote }}
 {{ end -}}
 EOF
-{{ if .packages.darwin.update -}}
+{{ if .packages.darwin.upgrade -}}
 brew update
 brew upgrade -y
+{{ end -}}
 {{ end -}}
 {{ if eq .chezmoi.os "linux" -}}
 {{ if eq .chezmoi.osRelease.id "fedora" -}}
