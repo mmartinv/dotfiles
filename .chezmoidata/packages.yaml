@@ -1,6 +1,6 @@
 packages:
   darwin:
-    taps: 
+    taps:
       - nohajc/anylinuxfs
     brews:
       - chezmoi
@@ -13,7 +13,6 @@ packages:
       - gpg2
       - gpgme
       - jq
-      - keepassxc
       - lazygit
       - libvirt
       - luarocks
@@ -48,7 +47,7 @@ packages:
         - gh
         - glab
         - golang
-        - go-rpm-macros 
+        - go-rpm-macros
         - guestfs-tools
         - jq
         - keepassxc
@@ -80,8 +79,8 @@ packages:
             repo_gpgcheck=0
             gpgkey=https://packages.cloud.google.com/yum/doc/rpm-package-key-v10.gpg
           rpms:
-             - google-cloud-cli
-             - libxcrypt-compat.x86_64
+            - google-cloud-cli
+            - libxcrypt-compat.x86_64
         - name: claude-code
           value: |-
             [claude-code]
@@ -99,14 +98,13 @@ packages:
             - starship
         - name: atim/lazygit
           rpms:
-           - lazygit
+            - lazygit
         - name: fluhus/gnome-googledrive
           rpms:
         - name: goncalosilva/act
-          rpms: 
+          rpms:
             - act-cli
       flatpak:
         flathub:
           - us.zoom.Zoom
           - im.riot.Riot
-
