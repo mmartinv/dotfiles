@@ -1,5 +1,6 @@
 packages:
   darwin:
+    upgrade: true
     taps:
       - nohajc/anylinuxfs
     brews:
