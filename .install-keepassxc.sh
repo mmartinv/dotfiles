@@ -1,12 +1,12 @@
 #!/bin/sh
 
 # exit immediately if keepassxc is already in $PATH
-type keepassxc >/dev/null 2>&1 && exit
+type keepassxc-cli >/dev/null 2>&1 && exit
 
 case "$(uname -s)" in
 Darwin)
   # commands to install keepassxc on Darwin
-  brew install -y keepassxc
+  brew install --cask -y keepassxc
   ;;
 Linux)
   # commands to install keepassxc on Linux
