@@ -59,7 +59,7 @@ sudo dnf update --refresh -y
 ### Flatpak
 {{ range .packages.linux.fedora.flatpaks -}}
 for app in {{ range .apps }}{{ . | quote }} {{ end }}; do
-  flatpak info "${app}" &>/dev/null || flatpak install --system -y {{ .remote | quote }} "${app}"
+  flatpak info "${app}" &>/dev/null || flatpak install -y {{ .remote | quote }} "${app}"
 done
 {{ end }}
 {{ end }}
