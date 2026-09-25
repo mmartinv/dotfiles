@@ -20,36 +20,48 @@ brew upgrade -y
 {{ if eq .chezmoi.os "linux" -}}
 {{ if eq .chezmoi.osRelease.id "fedora" -}}
 #!/bin/bash
-
-### RPM packages
-{{ if .packages.linux.fedora.rpms }}
-sudo dnf install -y {{ range .packages.linux.fedora.rpms -}}{{ . | quote }} {{ end }}
-{{ end }}
+{{ if .packages.linux.fedora.repos }}
 ### Custom repos
-{{ range .packages.linux.fedora.repos -}}
-sudo tee /etc/yum.repos.d/{{ .name }}.repo <<EOF
+{{ range .packages.linux.fedora.repos }}
+repo_file="/etc/yum.repos.d/{{ .name }}.repo"
+[ -f "${repo_file}" ] || sudo tee "${repo_file}"  <<EOF
 {{ .value }}
 EOF
-{{ if .rpms -}}
-sudo dnf install -y {{ range .rpms }}{{ . | quote }} {{ end }}
+
 {{ end }}
 {{ end }}
-### Repos from Copr
+{{ if .packages.linux.fedora.coprs }}
+### Coprs
 {{ range .packages.linux.fedora.coprs -}}
-sudo dnf copr enable -y {{ .name | quote }}
-{{ if .rpms -}}
-sudo dnf install -y {{ range .rpms }}{{ . | quote }} {{ end }}
+sudo dnf copr list | grep -q {{ . |quote }} || sudo dnf copr enable -y {{ . | quote }}
+{{ end -}}
 {{ end }}
+
+{{ if .packages.linux.fedora.groups }}
+### RPM groups
+for group in {{ range .packages.linux.fedora.groups -}}{{ . | quote }} {{ end }}; do
+sudo dnf group list --installed | grep -q "${group}" || sudo dnf group install -y "${group}"
+done
 {{ end }}
-### Flatpak
-{{ if .packages.linux.fedora.flatpak -}}
-{{ range $hub, $flatpaks := .packages.linux.fedora.flatpak -}}
-flatpak install --system {{ $hub | quote }} {{ range $flatpaks }}{{ . | quote }} {{ end }}
+
+{{ if .packages.linux.fedora.rpms }}
+### RPM packages
+rpms="{{ range .packages.linux.fedora.rpms -}}{{ . }} {{ end }}"
+rpm -q ${rpms} &>/dev/null || sudo dnf install -y ${rpms}
 {{ end }}
-{{ end }}
+
+{{- if .packages.linux.fedora.update }}
 ### Update
-{{ if .packages.linux.fedora.update -}}
-sudo dnf update --refresh
-{{ end -}}
-{{ end -}}
+sudo dnf update --refresh -y
+{{ end }}
+
+{{ if .packages.linux.fedora.flatpaks -}}
+### Flatpak
+{{ range .packages.linux.fedora.flatpaks -}}
+for app in {{ range .apps }}{{ . | quote }} {{ end }}; do
+  flatpak info "${app}" &>/dev/null || flatpak install --system -y {{ .remote | quote }} "${app}"
+done
+{{ end }}
+{{ end }}
+{{ end }}
 {{ end -}}

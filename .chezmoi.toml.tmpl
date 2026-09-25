@@ -7,11 +7,11 @@
 
 [diff]
     command = "nvim"
-    args = ["-d", "{{"{{"}} .Destination {{"}}"}}", "{{"{{"}} .Target {{"}}"}}"]
+    args = ["-d", "{{ "{{ .Destination }}" }}", "{{ "{{ .Target }}" }}"]
 
 [merge]
     command = "nvim"
-    args = ["-d", "{{"}}"}} .Destination {{"}}"}}", "{{"{{"}} .Source {{"}}"}}, {{"{{"}} .Target {{"}}"}}"]
+    args = ["-d", "{{ "{{ .Destination }}" }}", "{{ "{{ .Source }}" }}", "{{ "{{ .Target }}" }}"]
 
 [keepassxc]
     database = "{{ .chezmoi.rawHomeDir }}/.passwords.kdbx"

@@ -1,6 +1,6 @@
 packages:
   darwin:
-    upgrade: true
+    upgrade: false
     taps:
       - nohajc/anylinuxfs
     brews:
@@ -35,40 +35,6 @@ packages:
       - zoom
   linux:
     fedora:
-      update: true
-      rpms:
-        - cargo
-        - chezmoi
-        - cockpit
-        - cockpit-machines
-        - cockpit-podman
-        - curl
-        - firewalld
-        - git
-        - gh
-        - glab
-        - golang
-        - go-rpm-macros
-        - guestfs-tools
-        - jq
-        - keepassxc
-        - libvirt-client
-        - libvirt-daemon-kvm
-        - libvirt-daemon
-        - libvirt-nss
-        - luarocks
-        - neovim
-        - openssl
-        - podman
-        - podman-docker
-        - podman-compose
-        - qemu-img
-        - qemu-kvm
-        - "@rpm-development-tools"
-        - redhat-internal-linfo3
-        - tmux
-        - virt-install
-        - yq
       repos:
         - name: google-cloud-cli
           value: |-
@@ -79,9 +45,6 @@ packages:
             gpgcheck=1
             repo_gpgcheck=0
             gpgkey=https://packages.cloud.google.com/yum/doc/rpm-package-key-v10.gpg
-          rpms:
-            - google-cloud-cli
-            - libxcrypt-compat.x86_64
         - name: claude-code
           value: |-
             [claude-code]
@@ -91,21 +54,54 @@ packages:
             gpgcheck=1
             repo_gpgcheck=0
             gpgkey=https://downloads.claude.ai/keys/claude-code.asc
-          rpms:
-            - claude-code
       coprs:
-        - name: atim/starship
-          rpms:
-            - starship
-        - name: atim/lazygit
-          rpms:
-            - lazygit
-        - name: fluhus/gnome-googledrive
-          rpms:
-        - name: goncalosilva/act
-          rpms:
-            - act-cli
-      flatpak:
-        flathub:
-          - us.zoom.Zoom
-          - im.riot.Riot
+        - atim/starship
+        - atim/lazygit
+        - fluhus/gnome-googledrive
+        - goncalossilva/act
+      groups:
+        - rpm-development-tools
+      rpms:
+        - act-cli
+        - cargo
+        - chezmoi
+        - claude-code
+        - cockpit
+        - cockpit-machines
+        - cockpit-podman
+        - curl
+        - firewalld
+        - git
+        - gh
+        - glab
+        - golang
+        - go-rpm-macros
+        - google-cloud-cli
+        - guestfs-tools
+        - jq
+        - keepassxc
+        - lazygit
+        - libvirt-client
+        - libvirt-daemon-kvm
+        - libvirt-daemon
+        - libvirt-nss
+        - libxcrypt-compat.x86_64
+        - luarocks
+        - neovim
+        - openssl
+        - podman
+        - podman-docker
+        - podman-compose
+        - qemu-img
+        - qemu-kvm
+        - redhat-internal-linfo3
+        - starship
+        - tmux
+        - virt-install
+        - yq
+      flatpaks:
+        - remote: flathub
+          apps:
+            - us.zoom.Zoom
+            - im.riot.Riot
+      update: false
