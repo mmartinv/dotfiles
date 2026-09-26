@@ -1,6 +1,6 @@
 export EMAIL={{ keepassxcAttribute "Accounts/Red Hat" "EMAIL" }}
 
-[ -z "${EMAIL}" ] ||  
+[ ! -f "/etc/os-release" ] || [ -z "${EMAIL}" ] ||  
 !command -v gio &>/dev/null || 
 gio mount -l | grep -q "google-drive://${EMAIL}" || 
 gio mount "google-drive://${EMAIL}" 
