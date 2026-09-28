@@ -1,14 +1,5 @@
 export EMAIL={{ keepassxcAttribute "Accounts/Red Hat" "EMAIL" }}
 
-[ ! -f "/etc/os-release" ] || [ -z "${EMAIL}" ] ||  
-!command -v gio &>/dev/null || 
-gio mount -l | grep -q "google-drive://${EMAIL}" || 
-gio mount "google-drive://${EMAIL}" 
-
-export KEEPASSXC_ARGS=("--no-password" "--key-file" "${HOME}/.keepassxc.key")
-export KEEPASSXC_DATABASE="${HOME}/.passwords.kdbx"
-export KEEPASSXC_ENTRY="Accounts/Red Hat"
-
 ### Tokens
 export GITHUB_TOKEN={{ keepassxcAttribute "Accounts/Red Hat" "GITHUB_TOKEN" }}
 export GITHUB_PERSONAL_ACCESS_TOKEN="${GITHUB_TOKEN}"
@@ -27,5 +18,16 @@ export ANTHROPIC_VERTEX_PROJECT_ID={{ keepassxcAttribute "Accounts/Red Hat" "ANT
 #     gcloud auth application-default login
 #     gcloud auth application-default set-quota-project cloudability-it-gemini
 
+export KEEPASSXC_DATABASE="${HOME}/.passwords.kdbx"
+export KEEPASSXC_KEY="${HOME}/.keepassxc.key"
+export KEEPASSXC_ENTRY="Accounts/Red Hat"
 
+export KEEPASSXC_ARGS=("--no-password" "--key-file" "${KEEPASSXC_KEY}")
 
+[ ! -f "/etc/os-release" ] ||
+[ ! -e "${KEEPASSXC_DATABASE}" ] ||
+[ ! -e "${KEEPASSXC_KEY}" ] ||
+[ -z "${EMAIL}" ] ||
+!command -v gio &>/dev/null ||
+gio mount -l | grep -q "google-drive://${EMAIL}" ||
+gio mount "google-drive://${EMAIL}"
