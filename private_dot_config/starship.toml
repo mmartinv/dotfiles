@@ -1,6 +1,6 @@
 format = "$os$all$fill$container$kubernetes$openstack$aws$time$battery$line_break$sudo$username$character"
 
-command_timeout = 1000
+command_timeout = 2000
 
 # Inserts a blank line between shell prompts
 add_newline = false
