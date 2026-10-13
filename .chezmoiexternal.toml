@@ -1,0 +1,9 @@
+{{- $fontsDir := ".local/share/fonts" -}}
+{{if eq .chezmoi.os "darwin" -}}
+{{ $fontsDir = "Library/Fonts" }}
+{{ end -}}
+[AdwaitaMonoNerdFont]
+type = "archive"
+url = "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.5.1/AdwaitaMono.tar.xz"
+include = ["*.ttf"]
+targetPath = "{{ $fontsDir }}/AdwaitaMonoNerdFont"
