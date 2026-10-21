@@ -1,5 +1,9 @@
 export EMAIL={{ keepassxcAttribute "Accounts/Red Hat" "EMAIL" }}
 
+### EnMaaS API key
+export ENMAAS_BASE_URL={{ keepassxcAttribute "Accounts/Red Hat" "ENMAAS_BASE_URL" }}
+export ENMAAS_API_KEY={{ keepassxcAttribute "Accounts/Red Hat" "ENMAAS_API_KEY" }}
+
 ### Tokens
 export GITHUB_TOKEN={{ keepassxcAttribute "Accounts/Red Hat" "GITHUB_TOKEN" }}
 export GITHUB_PERSONAL_ACCESS_TOKEN="${GITHUB_TOKEN}"
@@ -7,10 +11,14 @@ export JIRA_TOKEN={{ keepassxcAttribute "Accounts/Red Hat" "JIRA_TOKEN" }}
 export QUAY_APP_TOKEN={{ keepassxcAttribute "Accounts/Red Hat" "QUAY_APP_TOKEN" }}
 
 ### Cloud config and API Keys
-export CLOUD_ML_REGION={{ keepassxcAttribute "Accounts/Red Hat" "CLOUD_ML_REGION" }}
+#export CLOUD_ML_REGION={{ keepassxcAttribute "Accounts/Red Hat" "CLOUD_ML_REGION" }}
 export GEMINI_API_KEY={{ keepassxcAttribute "Accounts/Red Hat" "GEMINI_API_KEY" }}
-export CLAUDE_CODE_USE_VERTEX={{ keepassxcAttribute "Accounts/Red Hat" "CLAUDE_CODE_USE_VERTEX" }}
-export ANTHROPIC_VERTEX_PROJECT_ID={{ keepassxcAttribute "Accounts/Red Hat" "ANTHROPIC_VERTEX_PROJECT_ID" }}
+#export CLAUDE_CODE_USE_VERTEX={{ keepassxcAttribute "Accounts/Red Hat" "CLAUDE_CODE_USE_VERTEX" }}
+#export ANTHROPIC_VERTEX_PROJECT_ID={{ keepassxcAttribute "Accounts/Red Hat" "ANTHROPIC_VERTEX_PROJECT_ID" }}
+
+export ANTHROPIC_API_KEY="${ENMAAS_API_KEY}"
+export ANTHROPIC_BASE_URL="${ENMAAS_BASE_URL}"
+export CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY=1
 
 # Note: Unless you are using an individual project (starting with itpc-ca-XXXX),
 # leave cloudability-it-gemini in the following commands; that is static and the same for everyone.
