@@ -25,6 +25,7 @@ packages:
       - rust
       - starship
       - tmux
+      - virt-install
       - yq
     casks:
       - claude
