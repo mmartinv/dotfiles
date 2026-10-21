@@ -5,6 +5,7 @@ packages:
       - nohajc/anylinuxfs
     brews:
       - chezmoi
+      - coreutils
       - curl
       - freerdp
       - git
