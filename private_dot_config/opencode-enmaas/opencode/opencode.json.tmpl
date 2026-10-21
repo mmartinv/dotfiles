@@ -8,7 +8,7 @@
       "env": ["ENMAAS_KEY"],
       "package": "@opencode/ai/providers/openai-compatible",
       "settings": {
-        "baseURL": "{{ keepassxcAttribute "Accounts/Red Hat" "ENMAAS_BASE_URL" }}"
+        "baseURL": "https://api.enmaas.devshift.net/v1"
       },
       "models": {
         "rits/zai-org/glm-5-3": {
@@ -19,11 +19,11 @@
     },
     "openai": {
       "env": ["ENMAAS_KEY"],
-      "settings": { "baseURL": "{{ keepassxcAttribute "Accounts/Red Hat" "ENMAAS_BASE_URL" }}" }
+      "settings": { "baseURL": "https://api.enmaas.devshift.net/v1" }
     },
     "anthropic": {
       "env": ["ENMAAS_KEY"],
-      "settings": { "baseURL": "{{ keepassxcAttribute "Accounts/Red Hat" "ENMAAS_BASE_URL" }}" }
+      "settings": { "baseURL": "https://api.enmaas.devshift.net/v1" }
     }
   }
 }
