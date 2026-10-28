@@ -14,6 +14,8 @@ packages:
       - golang
       - gpg2
       - gpgme
+      - gs
+      - imagemagick
       - jq
       - lazygit
       - libvirt
@@ -25,7 +27,8 @@ packages:
       - rust
       - starship
       - tmux
-      - virt-install
+      - virt-manager
+      - wget2
       - yq
     casks:
       - claude
@@ -33,6 +36,7 @@ packages:
       - element
       - font-adwaita-mono-nerd-font
       - gcloud-cli
+      - iterm2
       - keepassxc
       - zoom
   linux:
