@@ -1,0 +1,3 @@
+! command -v defaults &>/dev/null ||
+[ "$(defaults read com.apple.finder AppleShowAllFiles)" = "TRUE" ] ||
+defaults write com.apple.finder AppleShowAllFiles TRUE
