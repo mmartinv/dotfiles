@@ -22,13 +22,13 @@ hosts:
     # Configure host for API endpoint. Defaults to the host itself.
     api_host: gitlab.com
     # Your GitLab access token. To get one, read https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html
-    token: {{ keepassxcAttribute "Accounts/Red Hat" "GITLAB_ACCESS_TOKEN" }}
+    token: {{ keepassxcAttribute "Accounts/Red Hat" "GITLAB_TOKEN" }}
   {{ keepassxcAttribute "Accounts/Red Hat" "GITLAB_CEE_HOST" }}:
     # What protocol to use to access the API endpoint. Supported values: http, https.
     api_protocol: https
     # Configure host for API endpoint. Defaults to the host itself.
     api_host: {{ keepassxcAttribute "Accounts/Red Hat" "GITLAB_CEE_HOST" }}
     # Your GitLab access token. To get one, read https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html
-    token: {{ keepassxcAttribute "Accounts/Red Hat" "GITLAB_CEE_ACCESS_TOKEN" }}
+    token: {{ keepassxcAttribute "Accounts/Red Hat" "GITLAB_CEE_TOKEN" }}
 last_update_check_timestamp: "2026-09-16T16:16:37+02:00"
 last_seen_version: 1.114.0
