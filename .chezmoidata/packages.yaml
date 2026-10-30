@@ -60,22 +60,35 @@ packages:
             gpgcheck=1
             repo_gpgcheck=0
             gpgkey=https://downloads.claude.ai/keys/claude-code.asc
+        - name: rcm-tools-fedora-rpms
+          value: |-
+            [rcm-tools-fedora-rpms]
+            name=RCM Tools for Fedora \$releasever (RPMs)
+            baseurl=https://download.devel.redhat.com/rel-eng/RCMTOOLS/latest-RCMTOOLS-2-F-\$releasever/compose/Everything/\$basearch/os/
+            enabled=1
+            gpgcheck=1
+            gpgkey=https://download.devel.redhat.com/rel-eng/RCMTOOLS/RPM-GPG-KEY-rcminternal
+            skip_if_unavailable=1
       coprs:
         - atim/starship
         - atim/lazygit
         - fluhus/gnome-googledrive
         - goncalossilva/act
+        - copr.devel.redhat.com/rhcopr-project/toolset
       groups:
         - rpm-development-tools
       rpms:
         - act-cli
         - cargo
+        - centpkg
         - chezmoi
         - claude-code
         - cockpit
         - cockpit-machines
         - cockpit-podman
+        - copr-cli
         - curl
+        - fedpkg
         - firewalld
         - git
         - gh
@@ -101,6 +114,8 @@ packages:
         - qemu-img
         - qemu-kvm
         - redhat-internal-linfo3
+        - rhcopr
+        - rhpkg
         - starship
         - tmux
         - virt-install
