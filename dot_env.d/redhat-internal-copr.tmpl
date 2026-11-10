@@ -1,0 +1,20 @@
+{{- $keepassxc_has_entry := printf "%s/.chezmoitemplates/keepassxc-has-entry" .chezmoi.sourceDir -}}
+{{- $hasCopr := eq (output $keepassxc_has_entry "Red Hat/Copr" "URL" | trim) "true" -}}
+{{ if $hasCopr -}}
+# Red Hat internal coprs
+export REDHAT_COPR_HOST={{ keepassxcAttribute "Red Hat/Copr" "URL" }}
+
+{{ if eq .chezmoi.os "linux" -}}
+[ -z "${REDHAT_COPR_HOST}" ] ||
+! command -v dnf &>/dev/null ||
+! command -v sudo &>/dev/null ||
+[ -f "/etc/yum.repos.d/_copr:${REDHAT_COPR_HOST}:rhcopr-project:toolset.repo" ] ||
+dnf copr list 2>/dev/null | grep -q "${REDHAT_COPR_HOST}/rhcopr-project/toolset" ||
+sudo dnf copr enable -y "${REDHAT_COPR_HOST}/rhcopr-project/toolset"
+
+! command -v dnf &>/dev/null ||
+! command -v sudo &>/dev/null ||
+command -v rhcopr &>/dev/null ||
+sudo dnf install -y rhcopr
+{{ end -}}
+{{ end -}}

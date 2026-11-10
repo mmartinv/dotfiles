@@ -1,0 +1,6 @@
+{{- $keepassxc_has_entry := printf "%s/.chezmoitemplates/keepassxc-has-entry" .chezmoi.sourceDir -}}
+{{- $hasGitLab := eq (output $keepassxc_has_entry "Internet/GitLab" "GITLAB_TOKEN" | trim) "true" -}}
+{{ if $hasGitLab -}}
+# tokens in ~/.config/glab-cli/config.yml
+export GITLAB_TOKEN={{ keepassxcAttribute "Internet/GitLab" "GITLAB_TOKEN" }}
+{{ end -}}

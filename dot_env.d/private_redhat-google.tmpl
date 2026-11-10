@@ -1,0 +1,24 @@
+{{- $keepassxc_has_entry := printf "%s/.chezmoitemplates/keepassxc-has-entry" .chezmoi.sourceDir -}}
+{{- $hasGoogle := eq (output $keepassxc_has_entry "Red Hat/Google" | trim) "true" -}}
+{{- $hasGemini := eq (output $keepassxc_has_entry "Red Hat/Google" "GEMINI_API_KEY" | trim) "true" -}}
+{{ if $hasGoogle -}}
+# Red Hat Google account credentials.
+export EMAIL={{ (keepassxc "Red Hat/Google").UserName }}
+{{ end -}}
+{{ if $hasGemini -}}
+export GEMINI_API_KEY={{ keepassxcAttribute "Red Hat/Google" "GEMINI_API_KEY" }}
+{{ end -}}
+# Note: Unless you are using an individual project (starting with itpc-ca-XXXX),
+# leave cloudability-it-gemini in the following commands; that is static and the same for everyone.
+# If you have a dedicated project, omit the cloudability-it-gemini parameter.
+#     gcloud auth application-default login
+#     gcloud auth application-default set-quota-project cloudability-it-gemini
+{{ if $hasGoogle -}}
+[ ! -e "/etc/os-release" ] ||
+[ ! -e "${KEEPASSXC_DATABASE}" ] ||
+[ ! -e "${KEEPASSXC_KEY}" ] ||
+[ -z "${EMAIL}" ] ||
+!command -v gio &>/dev/null ||
+gio mount -l | grep -q "google-drive://${EMAIL}" ||
+gio mount "google-drive://${EMAIL}"
+{{ end -}}

@@ -1,0 +1,11 @@
+{{- $keepassxc_has_entry := printf "%s/.chezmoitemplates/keepassxc-has-entry" .chezmoi.sourceDir -}}
+{{- $hasRedHatGPG := eq (output $keepassxc_has_entry "Red Hat/GPG" "PGP_PRIVATE_KEY" "PGP_PUBLIC_KEY" | trim) "true" -}}
+{{- $hasRedHatEMail := eq (output $keepassxc_has_entry "Red Hat/EMail" "UserName" | trim) "true" -}}
+{{ if and $hasRedHatGPG $hasRedHatEMail -}}
+export GPG_TTY=$(tty)
+# Delete the key from the keyring to force a re-import after rotating it.
+[ -z "${KEEPASSXC_DATABASE}" ] || ! command -v keepassxc-cli &>/dev/null || ! command -v gpg &>/dev/null || {
+  gpg --list-secret-keys "{{ keepassxcAttribute "Red Hat/EMail" "UserName" }}" &>/dev/null ||
+  keepassxc-cli show "${KEEPASSXC_ARGS[@]}" "${KEEPASSXC_DATABASE}" "Red Hat/GPG" --attributes 'PGP_PRIVATE_KEY' --attributes 'PGP_PUBLIC_KEY' | gpg --import
+}
+{{ end -}}

@@ -1,3 +1,14 @@
+{{- $keepassxc_has_entry := printf "%s/.chezmoitemplates/keepassxc-has-entry" .chezmoi.sourceDir -}}
+{{- $hasRedHatKerberos := eq (output $keepassxc_has_entry "Red Hat/Kerberos" "KERBEROS_REALM" "KERBEROS_DOMAIN" | trim) "true" -}}
+{{- $hasPersonalKerberos := eq (output $keepassxc_has_entry "Personal/Kerberos" "KERBEROS_REALM" "KERBEROS_DOMAIN" | trim) "true" -}}
+{{- /* A system is considered managed by Red Hat IT when macOS is enrolled in MDM (the managed preferences directory is present or profiles reports the enrollment) or Linux ships its Kerberos configuration for IPA.REDHAT.COM. */ -}}
+{{- $isManagedSystem := stat "/etc/krb5.conf.d/ipa_redhat_com" -}}
+{{- if eq .chezmoi.os "darwin" }}{{- $isManagedSystem = or
+      (stat "/Library/Managed Preferences")
+      (eq (output "sh" "-c" "profiles status -type enrollment 2>/dev/null | grep -q 'Enrolled in MDM: Yes' && echo true || echo false" | trim) "true") }}{{- end -}}
+{{- $defaultKerberosIdentity := "Personal" -}}
+{{- if and $hasRedHatKerberos (or (not $hasPersonalKerberos) $isManagedSystem) }}{{- $defaultKerberosIdentity = "Red Hat" }}{{- end -}}
+{{ if or $hasRedHatKerberos $hasPersonalKerberos -}}
 # This file should normally be installed by your distribution into a
 # directory that is included from the Kerberos configuration file (/etc/krb5.conf)
 # On Fedora/RHEL/CentOS, this is /etc/krb5.conf.d/
@@ -6,7 +17,7 @@
 includedir /var/lib/sss/pubconf/krb5.include.d/
 
 [libdefaults]
-    default_realm = {{ keepassxcAttribute "Accounts/Red Hat" "KERBEROS_REALM" }}
+    default_realm = {{ keepassxcAttribute (printf "%s/Kerberos" $defaultKerberosIdentity) "KERBEROS_REALM" }}
     dns_canonicalize_hostname = false
     dns_lookup_kdc = true
     dns_lookup_realm = true
@@ -26,7 +37,12 @@ includedir /var/lib/sss/pubconf/krb5.include.d/
     permitted_enctypes = aes256-cts-hmac-sha384-192 aes128-cts-hmac-sha256-128 aes256-cts-hmac-sha1-96 aes128-cts-hmac-sha1-96 camellia256-cts-cmac camellia128-cts-cmac
 
 [realms]
-  {{ keepassxcAttribute "Accounts/Red Hat" "KERBEROS_REALM" }} = {
-    default_domain = {{ keepassxcAttribute "Accounts/Red Hat" "KERBEROS_DOMAIN" }}
+{{ if $hasRedHatKerberos }}  {{ keepassxcAttribute "Red Hat/Kerberos" "KERBEROS_REALM" }} = {
+    default_domain = {{ keepassxcAttribute "Red Hat/Kerberos" "KERBEROS_DOMAIN" }}
     dns_lookup_kdc = true
   }
+{{ end }}{{ if $hasPersonalKerberos }}  {{ keepassxcAttribute "Personal/Kerberos" "KERBEROS_REALM" }} = {
+    default_domain = {{ keepassxcAttribute "Personal/Kerberos" "KERBEROS_DOMAIN" }}
+    dns_lookup_kdc = true
+  }
+{{ end }}{{- end -}}

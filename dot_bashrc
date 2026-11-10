@@ -11,6 +11,11 @@ if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
 fi
 export PATH
 
+# KeePassXC database and key, used by the env.d files sourced below.
+export KEEPASSXC_DATABASE="${HOME}/.passwords.kdbx"
+export KEEPASSXC_KEY="${HOME}/.keepassxc.key"
+export KEEPASSXC_ARGS=("--no-password" "--key-file" "${KEEPASSXC_KEY}")
+
 # Common aliases and functions
 if [ -d ~/.env.d ]; then
     for env in ~/.env.d/*; do

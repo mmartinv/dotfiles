@@ -10,3 +10,78 @@ README.md
 {{- if ne .chezmoi.os "darwin" }}
 Library
 {{- end }}
+{{- $keepassxc_has_entry := printf "%s/.chezmoitemplates/keepassxc-has-entry" .chezmoi.sourceDir -}}
+{{- $hasRedHatKinit := eq (output $keepassxc_has_entry "Red Hat/Kerberos" "KERBEROS_USER" "KERBEROS_DOMAIN" "KERBEROS_REALM" | trim) "true" -}}
+{{- $hasPersonalKinit := eq (output $keepassxc_has_entry "Personal/Kerberos" "KERBEROS_USER" "KERBEROS_DOMAIN" "KERBEROS_REALM" | trim) "true" -}}
+{{- $hasRedHatKerberos := eq (output $keepassxc_has_entry "Red Hat/Kerberos" "KERBEROS_REALM" "KERBEROS_DOMAIN" | trim) "true" -}}
+{{- $hasPersonalKerberos := eq (output $keepassxc_has_entry "Personal/Kerberos" "KERBEROS_REALM" "KERBEROS_DOMAIN" | trim) "true" -}}
+{{- $hasGitHub := eq (output $keepassxc_has_entry "Internet/GitHub" "GITHUB_TOKEN" | trim) "true" -}}
+{{- $hasGitLab := eq (output $keepassxc_has_entry "Internet/GitLab" "GITLAB_TOKEN" | trim) "true" -}}
+{{- $hasGoogle := eq (output $keepassxc_has_entry "Red Hat/Google" | trim) "true" -}}
+{{- $hasRedHatGitLab := eq (output $keepassxc_has_entry "Red Hat/GitLab" "GITLAB_HOST" "GITLAB_TOKEN" | trim) "true" -}}
+{{- $hasJira := eq (output $keepassxc_has_entry "Red Hat/Jira" "JIRA_TOKEN" | trim) "true" -}}
+{{- $hasQuay := eq (output $keepassxc_has_entry "Red Hat/Quay" "QUAY_APP_TOKEN" | trim) "true" -}}
+{{- $hasAnthropic := eq (output $keepassxc_has_entry "Red Hat/Anthropic" "CLOUD_ML_REGION" "CLAUDE_CODE_USE_VERTEX" "ANTHROPIC_VERTEX_PROJECT_ID" | trim) "true" -}}
+{{- $hasEnmaas := eq (output $keepassxc_has_entry "Red Hat/EnMaaS" "ENMAAS_BASE_URL" "ENMAAS_KEY" | trim) "true" -}}
+{{- $hasDownloads := eq (output $keepassxc_has_entry "Red Hat/Downloads" "URL" | trim) "true" -}}
+{{- $hasCopr := eq (output $keepassxc_has_entry "Red Hat/Copr" "URL" | trim) "true" -}}
+{{- $hasPersonalSSH := eq (output $keepassxc_has_entry "Personal/SSH" "SSH_ID_RSA" "SSH_ID_RSA_PUB" | trim) "true" -}}
+{{- $hasPersonalGPG := eq (output $keepassxc_has_entry "Personal/GPG" "PGP_PRIVATE_KEY" "PGP_PUBLIC_KEY" | trim) "true" -}}
+{{- $hasPersonalEMail := eq (output $keepassxc_has_entry "Personal/EMail" "UserName" | trim) "true" -}}
+{{- $hasRedHatSSH := eq (output $keepassxc_has_entry "Red Hat/SSH" "SSH_ID_RSA" "SSH_ID_RSA_PUB" | trim) "true" -}}
+{{- $hasRedHatGPG := eq (output $keepassxc_has_entry "Red Hat/GPG" "PGP_PRIVATE_KEY" "PGP_PUBLIC_KEY" | trim) "true" -}}
+{{- $hasRedHatEMail := eq (output $keepassxc_has_entry "Red Hat/EMail" "UserName" | trim) "true" -}}
+{{- if not $hasRedHatKinit }}
+.env.d/redhat-kinit
+{{- end }}
+{{- if not $hasPersonalKinit }}
+.env.d/kinit
+{{- end }}
+{{- if not (or $hasRedHatKerberos $hasPersonalKerberos) }}
+.config/krb5.conf
+{{- end }}
+{{- if not $hasGitHub }}
+.env.d/github
+{{- end }}
+{{- if not $hasGitLab }}
+.env.d/gitlab
+{{- end }}
+{{- if not $hasRedHatGitLab }}
+.env.d/redhat-gitlab
+{{- end }}
+{{- if not $hasEnmaas }}
+.codex
+.config/opencode
+.claude/settings.json
+.env.d/redhat-enmaas
+{{- end }}
+{{- if not $hasGoogle }}
+.env.d/redhat-google
+{{- end }}
+{{- if not $hasJira }}
+.env.d/redhat-jira
+{{- end }}
+{{- if not $hasQuay }}
+.env.d/redhat-quay
+{{- end }}
+{{- if not $hasAnthropic }}
+.env.d/redhat-anthropic
+{{- end }}
+{{- if not $hasDownloads }}
+.env.d/redhat-internal-repos
+{{- end }}
+{{- if not $hasCopr }}
+.env.d/redhat-internal-copr
+{{- end }}
+{{- if not $hasPersonalSSH }}
+.env.d/ssh
+{{- end }}
+{{- if not (and $hasPersonalGPG $hasPersonalEMail) }}
+.env.d/gpg
+{{- end }}
+{{- if not $hasRedHatSSH }}
+.env.d/redhat-ssh
+{{- end }}
+{{- if not (and $hasRedHatGPG $hasRedHatEMail) }}
+.env.d/redhat-gpg
+{{- end }}

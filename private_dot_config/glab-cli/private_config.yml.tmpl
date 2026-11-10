@@ -1,3 +1,6 @@
+{{- $keepassxc_has_entry := printf "%s/.chezmoitemplates/keepassxc-has-entry" .chezmoi.sourceDir -}}
+{{- $hasGitLab := eq (output $keepassxc_has_entry "Internet/GitLab" "GITLAB_TOKEN" | trim) "true" -}}
+{{- $hasRedHatGitLab := eq (output $keepassxc_has_entry "Red Hat/GitLab" "GITLAB_HOST" "GITLAB_TOKEN" | trim) "true" -}}
 # What protocol to use when performing Git operations. Supported values: ssh, https.
 git_protocol: ssh
 # What editor glab should run when creating issues, merge requests, etc. This global config cannot be overridden by hostname.
@@ -15,20 +18,24 @@ host: gitlab.com
 # Set to true (1) to disable prompts, or false (0) to enable them.
 no_prompt: false
 # Configuration specific for GitLab instances.
-hosts:
+hosts:{{ if not (or $hasGitLab $hasRedHatGitLab) }} {}{{ end }}
+{{ if $hasGitLab }}
   gitlab.com:
     # What protocol to use to access the API endpoint. Supported values: http, https.
     api_protocol: https
     # Configure host for API endpoint. Defaults to the host itself.
     api_host: gitlab.com
     # Your GitLab access token. To get one, read https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html
-    token: {{ keepassxcAttribute "Accounts/Red Hat" "GITLAB_TOKEN" }}
-  {{ keepassxcAttribute "Accounts/Red Hat" "GITLAB_CEE_HOST" }}:
+    token: {{ keepassxcAttribute "Internet/GitLab" "GITLAB_TOKEN" }}
+{{ end }}
+{{ if $hasRedHatGitLab }}
+  {{ keepassxcAttribute "Red Hat/GitLab" "GITLAB_HOST" }}:
     # What protocol to use to access the API endpoint. Supported values: http, https.
     api_protocol: https
     # Configure host for API endpoint. Defaults to the host itself.
-    api_host: {{ keepassxcAttribute "Accounts/Red Hat" "GITLAB_CEE_HOST" }}
+    api_host: {{ keepassxcAttribute "Red Hat/GitLab" "GITLAB_HOST" }}
     # Your GitLab access token. To get one, read https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html
-    token: {{ keepassxcAttribute "Accounts/Red Hat" "GITLAB_CEE_TOKEN" }}
+    token: {{ keepassxcAttribute "Red Hat/GitLab" "GITLAB_TOKEN" }}
+{{ end }}
 last_update_check_timestamp: "2026-09-16T16:16:37+02:00"
 last_seen_version: 1.114.0

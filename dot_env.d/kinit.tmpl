@@ -1,0 +1,28 @@
+{{- $keepassxc_has_entry := printf "%s/.chezmoitemplates/keepassxc-has-entry" .chezmoi.sourceDir -}}
+{{- $hasKerberos := eq (output $keepassxc_has_entry "Personal/Kerberos" "KERBEROS_USER" "KERBEROS_DOMAIN" "KERBEROS_REALM" | trim) "true" -}}
+{{ if $hasKerberos -}}
+KERBEROS_USER={{ keepassxcAttribute "Personal/Kerberos" "KERBEROS_USER" }}
+KERBEROS_DOMAIN={{ keepassxcAttribute "Personal/Kerberos" "KERBEROS_DOMAIN" }}
+KERBEROS_REALM={{ keepassxcAttribute "Personal/Kerberos" "KERBEROS_REALM" }}
+# export KRB5_TRACE=/dev/stdout
+# export KRB5CCNAME="KEYRING:persistent:$UID"
+export KRB5_CONFIG="${HOME}/.config/krb5.conf"
+# General keytab
+export KRB5_KTNAME="${HOME}/.config/krb5.keytab"
+# Default client keytab
+export KRB5_CLIENT_KTNAME="${HOME}/.config/${KERBEROS_USER}.keytab"
+# Automatic Kerberos ticket retrieval
+[ -z "${KERBEROS_USER}" ] ||
+[ -z "${KERBEROS_REALM}" ] ||
+[ ! -f "${KRB5_CONFIG}" ] ||
+[ ! -f "${KRB5_CLIENT_KTNAME}" ] ||
+! command -v grep &>/dev/null ||
+! command -v dig &>/dev/null ||
+! command -v klist &>/dev/null ||
+(
+   if [[ "$(dig +short +retry=0 +tries=0 +timeout=1 SRV _kerberos._udp.${KERBEROS_DOMAIN}| wc -l)" != 0 ]]; then
+      klist -l | grep -q -c "${KERBEROS_USER}@${KERBEROS_REALM}" || kinit -k -i
+   fi &
+   disown
+)
+{{ end -}}

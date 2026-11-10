@@ -1,0 +1,5 @@
+{{- $keepassxc_has_entry := printf "%s/.chezmoitemplates/keepassxc-has-entry" .chezmoi.sourceDir -}}
+{{- $hasQuay := eq (output $keepassxc_has_entry "Red Hat/Quay" "QUAY_APP_TOKEN" | trim) "true" -}}
+{{ if $hasQuay -}}
+export QUAY_APP_TOKEN={{ keepassxcAttribute "Red Hat/Quay" "QUAY_APP_TOKEN" }}
+{{ end -}}

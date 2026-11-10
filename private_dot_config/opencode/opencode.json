@@ -19,6 +19,9 @@
             "context": 1000000,
             "output": 65536
           }
+        },
+        "rits/deepseek-ai/DeepSeek-V4.1-Flash-1017": {
+          "name": "DeepSeek V4.1 Flash"
         }
       }
     },
@@ -73,9 +76,33 @@
           "@jmrp.io/gitlab-mcp-server"
         ],
         "environment": {
-          "GITLAB_URL": "{env:GITLAB_CEE_URL}",
+          "GITLAB_URL": "https://{env:GITLAB_CEE_HOST}",
           "GITLAB_TOKEN": "{env:GITLAB_CEE_TOKEN}"
         }
+      },
+      "context7": {
+        "type": "remote",
+        "url": "https://mcp.context7.com/mcp"
+      },
+      "playwright": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "@playwright/mcp"
+        ]
+      },
+      "seq-thinking": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "@modelcontextprotocol/server-sequential-thinking"
+        ]
+      },
+      "sentry": {
+        "type": "remote",
+        "url": "https://mcp.sentry.dev/mcp"
       }
     }
   }

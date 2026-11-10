@@ -1,0 +1,23 @@
+{{- $keepassxc_has_entry := printf "%s/.chezmoitemplates/keepassxc-has-entry" .chezmoi.sourceDir -}}
+{{- $hasDownloads := eq (output $keepassxc_has_entry "Red Hat/Downloads" "URL" | trim) "true" -}}
+{{ if $hasDownloads -}}
+# Red Hat internal repositories
+export REDHAT_DOWNLOAD_HOST={{ keepassxcAttribute "Red Hat/Downloads" "URL" }}
+
+{{ if eq .chezmoi.os "linux" -}}
+# RCM Tools repository. Save it as rcm-tools-fedora-rpms.repo so the file name
+# matches the [rcm-tools-fedora-rpms] repo id and cannot be duplicated.
+[ -z "${REDHAT_DOWNLOAD_HOST}" ] ||
+! command -v curl &>/dev/null ||
+! command -v sudo &>/dev/null ||
+[ -f /etc/yum.repos.d/rcm-tools-fedora.repo ] ||
+[ -f /etc/yum.repos.d/rcm-tools-fedora-rpms.repo ] ||
+grep -qs '^\[rcm-tools-fedora-rpms\]' /etc/yum.repos.d/*.repo 2>/dev/null ||
+sudo curl -fsSL -o /etc/yum.repos.d/rcm-tools-fedora-rpms.repo "https://${REDHAT_DOWNLOAD_HOST}/rel-eng/RCMTOOLS/rcm-tools-fedora.repo"
+
+! command -v dnf &>/dev/null ||
+! command -v sudo &>/dev/null ||
+command -v rhpkg &>/dev/null ||
+sudo dnf install -y rhpkg
+{{ end -}}
+{{ end -}}

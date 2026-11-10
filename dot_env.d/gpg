@@ -1,5 +1,0 @@
-export GPG_TTY=$(tty)
-[ -z "${EMAIL}" ] || ! command -v keepassxc-cli &>/dev/null || ! command -v gpg &>/dev/null || {
-  gpg --list-secret-keys "${EMAIL}" &>/dev/null ||
-  keepassxc-cli show "${KEEPASSXC_ARGS[@]}" "${KEEPASSXC_DATABASE}" "${KEEPASSXC_ENTRY}" --attributes 'PGP_PRIVATE_KEY' --attributes 'PGP_PUBLIC_KEY' | gpg --import
-}

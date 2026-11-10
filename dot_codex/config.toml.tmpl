@@ -1,5 +1,12 @@
+{{- $keepassxc_has_entry := printf "%s/.chezmoitemplates/keepassxc-has-entry" .chezmoi.sourceDir -}}
+{{- $hasEnmaas := eq (output $keepassxc_has_entry "Red Hat/EnMaaS" "ENMAAS_BASE_URL" "ENMAAS_KEY" | trim) "true" -}}
+{{ if $hasEnmaas -}}
 [model_providers.enmaas]
 name = "EnMaaS"
-base_url = "{{ keepassxcAttribute "Accounts/Red Hat" "ENMAAS_BASE_URL" }}/v1"
+base_url = "{{ keepassxcAttribute "Red Hat/EnMaaS" "ENMAAS_BASE_URL" }}/v1"
 env_key = "ENMAAS_KEY"
 wire_api = "responses"
+
+{{ end -}}
+[tui]
+screen_reader_detection_done = true

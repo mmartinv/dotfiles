@@ -1,0 +1,5 @@
+{{- $keepassxc_has_entry := printf "%s/.chezmoitemplates/keepassxc-has-entry" .chezmoi.sourceDir -}}
+{{- $hasJira := eq (output $keepassxc_has_entry "Red Hat/Jira" "JIRA_TOKEN" | trim) "true" -}}
+{{ if $hasJira -}}
+export JIRA_TOKEN={{ keepassxcAttribute "Red Hat/Jira" "JIRA_TOKEN" }}
+{{ end -}}

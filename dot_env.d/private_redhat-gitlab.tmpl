@@ -1,0 +1,8 @@
+{{- $keepassxc_has_entry := printf "%s/.chezmoitemplates/keepassxc-has-entry" .chezmoi.sourceDir -}}
+{{- $hasRedHatGitLab := eq (output $keepassxc_has_entry "Red Hat/GitLab" "GITLAB_HOST" "GITLAB_TOKEN" | trim) "true" -}}
+{{ if $hasRedHatGitLab -}}
+# tokens in ~/.config/glab-cli/config.yml
+export GITLAB_CEE_HOST={{ keepassxcAttribute "Red Hat/GitLab" "GITLAB_HOST" }}
+export GITLAB_CEE_TOKEN={{ keepassxcAttribute "Red Hat/GitLab" "GITLAB_TOKEN" }}
+alias glab-redhat="GITLAB_HOST=${GITLAB_CEE_HOST}  glab"
+{{ end -}}

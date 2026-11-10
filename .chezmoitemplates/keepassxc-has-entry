@@ -1,0 +1,123 @@
+#!/bin/sh
+# Usage: keepassxc-has-entry ENTRY [ATTRIBUTE...]
+#
+# Prints "true" if ENTRY exists in the KeePass database and all listed
+# attributes exist on it, otherwise prints "false". Always exits 0 so it can be
+# used safely from chezmoi templates via the output function.
+#
+# The first call after the database changes exports the database XML and builds
+# an index containing only entry paths and attribute names (never values). The
+# index is cached so the many template checks don't each pay the cost of
+# keeping the KeePass database.
+
+entry=${1:-}
+[ -n "$entry" ] || { printf 'false\n'; exit 0; }
+shift
+
+command -v keepassxc-cli >/dev/null 2>&1 || { printf 'false\n'; exit 0; }
+
+db=${KEEPASSXC_DATABASE:-"$HOME/.passwords.kdbx"}
+key=${KEEPASSXC_KEY:-"$HOME/.keepassxc.key"}
+[ -f "$db" ] || { printf 'false\n'; exit 0; }
+[ -f "$key" ] || { printf 'false\n'; exit 0; }
+
+cache_dir=${XDG_CACHE_HOME:-"$HOME/.cache"}/chezmoi
+cache=$cache_dir/keepass-index
+mkdir -p "$cache_dir" 2>/dev/null || { printf 'false\n'; exit 0; }
+
+mtime=$(stat -L -c %Y "$db" 2>/dev/null || stat -L -f %m "$db" 2>/dev/null || printf '0')
+size=$(stat -L -c %s "$db" 2>/dev/null || stat -L -f %z "$db" 2>/dev/null || printf '0')
+header="v1	$db	$mtime	$size"
+
+if [ ! -f "$cache" ] || [ "$(head -n 1 "$cache" 2>/dev/null)" != "$header" ]; then
+  tmp=$(mktemp "$cache.XXXXXX" 2>/dev/null) || { printf 'false\n'; exit 0; }
+  {
+    printf '%s\n' "$header"
+    keepassxc-cli export -q -f xml --no-password --key-file "$key" "$db" 2>/dev/null | awk '
+      function unescape(s) {
+        gsub(/&lt;/, "<", s)
+        gsub(/&gt;/, ">", s)
+        gsub(/&quot;/, "\"", s)
+        gsub(/&apos;/, "\047", s)
+        gsub(/&amp;/, "\\&", s)
+        return s
+      }
+      /^[ \t]*<Group>/ { depth++; gname[depth] = ""; next }
+      /^[ \t]*<\/Group>/ { if (depth > 0) depth--; next }
+      /^[ \t]*<Entry>/ {
+        if (in_entry) { nested++; next }
+        in_entry = 1; nested = 0; title = ""; expect_title = 0; nkeys = 0
+        delete keys
+        next
+      }
+      /^[ \t]*<\/Entry>/ {
+        if (nested > 0) { nested--; next }
+        if (in_entry) {
+          path = ""
+          for (i = 2; i <= depth; i++)
+            path = path (path == "" ? "" : "/") gname[i]
+          path = path (path == "" ? "" : "/") title
+          line = path
+          for (i = 1; i <= nkeys; i++)
+            line = line "\t" keys[i]
+          print line
+          in_entry = 0
+        }
+        next
+      }
+      in_entry && nested == 0 && /^[ \t]*<Key>/ {
+        k = $0
+        sub(/^[ \t]*<Key>/, "", k)
+        sub(/<\/Key>.*$/, "", k)
+        k = unescape(k)
+        if (k == "Title")
+          expect_title = 1
+        else
+          keys[++nkeys] = k
+        next
+      }
+      in_entry && nested == 0 && expect_title && /^[ \t]*<Value/ {
+        v = $0
+        sub(/^[ \t]*<Value[^>]*>/, "", v)
+        sub(/<\/Value>.*$/, "", v)
+        title = unescape(v)
+        expect_title = 0
+        next
+      }
+      !in_entry && /^[ \t]*<Name>/ {
+        v = $0
+        sub(/^[ \t]*<Name>/, "", v)
+        sub(/<\/Name>.*$/, "", v)
+        gname[depth] = unescape(v)
+        next
+      }
+    '
+  } >"$tmp" || { rm -f "$tmp"; printf 'false\n'; exit 0; }
+
+  # Only replace the cache if the export produced at least one entry.
+  if [ "$(wc -l <"$tmp" 2>/dev/null | tr -d ' ')" -gt 1 ]; then
+    chmod 600 "$tmp" 2>/dev/null
+    mv "$tmp" "$cache" 2>/dev/null || rm -f "$tmp"
+  else
+    rm -f "$tmp"
+    printf 'false\n'
+    exit 0
+  fi
+fi
+
+if [ "$#" -eq 0 ]; then
+  awk -F '\t' -v p="$entry" '$1 == p { found = 1 } END { exit !found }' "$cache"
+else
+  attrs=$(printf '%s\n' "$@")
+  awk -F '\t' -v p="$entry" -v attrs="$attrs" '
+    BEGIN { n = split(attrs, a, "\n") }
+    $1 == p { for (i = 2; i <= NF; i++) seen[$i] = 1 }
+    END {
+      for (i = 1; i <= n; i++)
+        if (!(a[i] in seen)) exit 1
+      exit 0
+    }
+  ' "$cache"
+fi && printf 'true\n' || printf 'false\n'
+
+exit 0

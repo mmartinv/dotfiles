@@ -1,0 +1,7 @@
+{{- $keepassxc_has_entry := printf "%s/.chezmoitemplates/keepassxc-has-entry" .chezmoi.sourceDir -}}
+{{- $hasAnthropic := eq (output $keepassxc_has_entry "Red Hat/Anthropic" "CLOUD_ML_REGION" "CLAUDE_CODE_USE_VERTEX" "ANTHROPIC_VERTEX_PROJECT_ID" | trim) "true" -}}
+{{ if $hasAnthropic -}}
+#export CLOUD_ML_REGION={{ keepassxcAttribute "Red Hat/Anthropic" "CLOUD_ML_REGION" }}
+#export CLAUDE_CODE_USE_VERTEX={{ keepassxcAttribute "Red Hat/Anthropic" "CLAUDE_CODE_USE_VERTEX" }}
+#export ANTHROPIC_VERTEX_PROJECT_ID={{ keepassxcAttribute "Red Hat/Anthropic" "ANTHROPIC_VERTEX_PROJECT_ID" }}
+{{ end -}}

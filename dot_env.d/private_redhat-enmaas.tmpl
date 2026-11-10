@@ -1,0 +1,10 @@
+{{- $keepassxc_has_entry := printf "%s/.chezmoitemplates/keepassxc-has-entry" .chezmoi.sourceDir -}}
+{{- $hasEnmaas := eq (output $keepassxc_has_entry "Red Hat/EnMaaS" "ENMAAS_BASE_URL" "ENMAAS_KEY" | trim) "true" -}}
+{{ if $hasEnmaas -}}
+export ENMAAS_BASE_URL={{ keepassxcAttribute "Red Hat/EnMaaS" "ENMAAS_BASE_URL" }}
+export ENMAAS_KEY={{ keepassxcAttribute "Red Hat/EnMaaS" "ENMAAS_KEY" }}
+
+export ANTHROPIC_API_KEY="${ENMAAS_KEY}"
+export ANTHROPIC_BASE_URL="${ENMAAS_BASE_URL}"
+export CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY=1
+{{ end -}}

@@ -1,3 +1,5 @@
+{{- $keepassxc_has_entry := printf "%s/.chezmoitemplates/keepassxc-has-entry" .chezmoi.sourceDir -}}
+{{- $hasGitHub := eq (output $keepassxc_has_entry "Internet/GitHub" "GITHUB_TOKEN" | trim) "true" -}}
 # Available toolsets:
 # context 	Strongly recommended: Tools that provide context about the current user and GitHub context you are operating in
 # actions 	GitHub Actions workflows and CI/CD operations
@@ -16,3 +18,7 @@
 #export GITHUB_TOOLSET="all"
 export GITHUB_TOOLSETS="repos,issues,pull_requests,actions,code_security"
 export GITHUB_READ_ONLY=1
+{{ if $hasGitHub -}}
+export GITHUB_TOKEN={{ keepassxcAttribute "Internet/GitHub" "GITHUB_TOKEN" }}
+export GITHUB_PERSONAL_ACCESS_TOKEN="${GITHUB_TOKEN}"
+{{ end -}}

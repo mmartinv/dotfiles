@@ -1,0 +1,18 @@
+{{- $keepassxc_has_entry := printf "%s/.chezmoitemplates/keepassxc-has-entry" .chezmoi.sourceDir -}}
+{{- $hasPersonalSSH := eq (output $keepassxc_has_entry "Personal/SSH" "SSH_ID_RSA" "SSH_ID_RSA_PUB" | trim) "true" -}}
+{{ if $hasPersonalSSH -}}
+command -v keepassxc-cli >/dev/null 2>&1 && {
+  [ -d "${HOME}/.ssh" ] || mkdir -p "${HOME}/.ssh"
+  ssh-add -l 2>/dev/null | grep -qF "${HOME}/.ssh/id_rsa " || {
+    [ -f "${HOME}/.ssh/id_rsa" ] || {
+      (umask 077; keepassxc-cli show "${KEEPASSXC_ARGS[@]}" "${KEEPASSXC_DATABASE}" "Personal/SSH" --attributes 'SSH_ID_RSA' >"${HOME}/.ssh/id_rsa")
+      keepassxc-cli show "${KEEPASSXC_ARGS[@]}" "${KEEPASSXC_DATABASE}" "Personal/SSH" --attributes 'SSH_ID_RSA_PUB' >"${HOME}/.ssh/id_rsa.pub"
+      chmod 600 "${HOME}/.ssh/id_rsa"
+    }
+    command -v ssh-add >/dev/null 2>&1 && ssh-add "${HOME}/.ssh/id_rsa" 2>/dev/null
+  }
+  [ ! -f "${HOME}/.ssh/id_rsa.pub" ] ||
+  grep -q -s -F -f "${HOME}/.ssh/id_rsa.pub" "${HOME}/.ssh/authorized_keys" ||
+  cat "${HOME}/.ssh/id_rsa.pub" >>"${HOME}/.ssh/authorized_keys"
+}
+{{ end -}}
