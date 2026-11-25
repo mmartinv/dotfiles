@@ -109,8 +109,8 @@ if [ "$#" -eq 0 ]; then
   awk -F '\t' -v p="$entry" '$1 == p { found = 1 } END { exit !found }' "$cache"
 else
   attrs=$(printf '%s\n' "$@")
-  awk -F '\t' -v p="$entry" -v attrs="$attrs" '
-    BEGIN { n = split(attrs, a, "\n") }
+  CZ_ATTRS="$attrs" awk -F '\t' -v p="$entry" '
+    BEGIN { n = split(ENVIRON["CZ_ATTRS"], a, "\n") }
     $1 == p { for (i = 2; i <= NF; i++) seen[$i] = 1 }
     END {
       for (i = 1; i <= n; i++)
